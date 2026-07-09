@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Planner - NammaRoute</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <h2>Namma<span class="highlight">Route</span></h2>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/route-planner" class="nav-link active">Route Planner</a></li>
+            <li><a href="/safety" class="nav-link">Safety</a></li>
+            <li><a href="/about" class="nav-link">About</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Route Planner Section -->
+<section class="route-planner-page">
+    <div class="container">
+        <div class="page-header">
+            <h1>Plan Your Smart Route</h1>
+            <p>Get personalized route suggestions optimized for safety, cost, and time across all transport modes with <strong>NammaRoute</strong></p>
+        </div>
+
+        <!-- Route Planning Form -->
+        <div class="planner-card">
+            <div class="card-header">
+                <h2><i class="fas fa-route"></i> Route Planner</h2>
+            </div>
+            <div class="card-content">
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="routeOrigin">From</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-map-marker-alt origin-icon"></i>
+                            <input type="text" id="routeOrigin" placeholder="Enter origin (e.g., Egmore)">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="routeDestination">To</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-map-marker-alt destination-icon"></i>
+                            <input type="text" id="routeDestination" placeholder="Enter destination (e.g., Taramani)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preference-tabs">
+                    <button class="tab-button active" data-preference="balanced">Balanced</button>
+                    <button class="tab-button" data-preference="fastest">Fastest</button>
+                    <button class="tab-button" data-preference="cheapest">Cheapest</button>
+                    <button class="tab-button" data-preference="safest">Safest</button>
+                </div>
+
+                <div class="button-row">
+                    <button onclick="searchRoutes()" class="search-button">
+                        <i class="fas fa-search"></i> Get Smart Routes
+                    </button>
+                    <button onclick="fetchAllRoutes()" class="search-button">
+                        <i class="fas fa-list"></i> Show All Routes
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loading" class="loading hidden">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Finding the best routes for you...</p>
+        </div>
+
+        <!-- Routes Results -->
+        <div id="routesContainer" class="routes-container hidden">
+            <h2>Recommended Routes</h2>
+            <div id="routesList" class="routes-list">
+                <!-- Routes will be populated here by JavaScript -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<script th:src="@{/js/route-planner.js}"></script>
+</body>
+</html>

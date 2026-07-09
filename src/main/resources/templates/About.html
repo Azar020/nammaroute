@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>About - NammaRoute</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <h2><span class="highlight">Namma</span>Route</h2>
+        </div>
+        <ul class="nav-menu">
+            <li><a th:href="@{/}" class="nav-link">Home</a></li>
+            <li><a th:href="@{/about}" class="nav-link active">About</a></li>
+            <li><a th:href="@{/safety}" class="nav-link">Safety</a></li>
+        </ul>
+    </div>
+</header>
+
+<main class="safety-page">
+    <section class="safety-section">
+        <h2>🚀 Our Mission</h2>
+        <p>
+            At <strong>NammaRoute</strong>, we empower commuters with smart, safe, and efficient route planning.
+            Whether you're catching a metro, hopping on a bus, or using local trains, our platform ensures the best route
+            in terms of time, safety, and cost.
+        </p>
+    </section>
+
+    <section class="safety-section">
+        <h2>💡 Why Choose NammaRoute?</h2>
+        <ul>
+            <li>📍 Multi-modal transport integration (Metro, Train, Bus)</li>
+            <li>📊 Real-time suggestions based on cost, time, and safety</li>
+            <li>🛡️ Route safety indicators and emergency contact info</li>
+            <li>📱 Mobile-friendly and easy-to-use interface</li>
+        </ul>
+    </section>
+
+    <section class="safety-section">
+        <h2>🌐 Vision for the Future</h2>
+        <p>
+            NammaRoute aims to be the go-to urban navigation platform for every Indian city, combining open data, citizen feedback,
+            and cutting-edge AI to make commuting smarter and safer.
+        </p>
+    </section>
+
+    <section class="safety-section">
+        <h2>📬 Contact Us</h2>
+        <p>
+            We'd love to hear your suggestions or feedback. Reach us at:
+            <br><strong>Email:</strong> support@nammaroute.in
+        </p>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="footer-bottom">
+        <p>&copy; 2025 NammaRoute. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

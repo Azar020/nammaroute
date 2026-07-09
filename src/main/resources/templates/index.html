@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NammaRoute - Unified Urban Transport Platform</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <h2>Namma<span class="highlight">Route</span></h2>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/route-planner" class="nav-link">Route Planner</a></li>
+            <li><a href="/safety" class="nav-link">Safety</a></li>
+            <li><a href="/about" class="nav-link">About</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-container">
+        <div class="hero-content">
+            <h1 class="hero-title">Namma<span class="highlight">Route</span></h1>
+            <p class="hero-subtitle">Your unified platform for safe, smart, and sustainable urban travel</p>
+            <p class="hero-description">
+                Connecting metro, buses, trains, and autos under one intelligent platform. Get optimized routes based on
+                safety, cost, and time - especially designed with women's safety in mind.
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="fas fa-route"></i>
+                    <span>Smart Routes</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Safety First</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Time Optimized</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>Cost Effective</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-leaf"></i>
+                    <span>Eco Friendly</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Unified Platform</span>
+                </div>
+            </div>
+
+            <a href="/route-planner" class="cta-button">Start Your Smart Journey</a>
+        </div>
+    </div>
+</section>
+
+<!-- Quick Route Planner -->
+<section class="quick-planner">
+    <div class="container">
+        <h2>Plan Your Route</h2>
+        <div class="planner-form">
+            <div class="input-group">
+                <i class="fas fa-map-marker-alt origin-icon"></i>
+                <input type="text" id="origin" placeholder="Enter origin (e.g., T. Nagar)">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-map-marker-alt destination-icon"></i>
+                <input type="text" id="destination" placeholder="Enter destination (e.g., Velachery)">
+            </div>
+            <button onclick="planRoute()" class="plan-button">
+                <i class="fas fa-search"></i> Get Smart Routes
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+    <div class="container">
+        <h2>Solving Urban Transport Challenges</h2>
+        <p class="section-subtitle">NammaRoute addresses every major pain point in urban transportation</p>
+
+        <div class="features-container">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <h3>Unified Navigation Platform</h3>
+                <p class="problem-tag">Solves: Lack of Unified Platform</p>
+                <p>One app for metro, buses, trains, autos, and ride-sharing. No more switching between multiple apps.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-route"></i>
+                </div>
+                <h3>Smart Route Optimization</h3>
+                <p class="problem-tag">Solves: Unoptimized Routes</p>
+                <p>AI-powered routing that considers real-time traffic, public transport schedules, and your preferences.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Women Safety Features</h3>
+                <p class="problem-tag">Solves: Pedestrian Safety</p>
+                <p>Well-lit routes, crowd density info, emergency contacts, and safe zone recommendations for night travel.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <h3>Cost-Smart Suggestions</h3>
+                <p class="problem-tag">Solves: Expensive Travel</p>
+                <p>Compare fares across all transport modes and get the most economical route suggestions.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Real-Time Updates</h3>
+                <p class="problem-tag">Solves: Traffic Congestion</p>
+                <p>Live traffic updates, transport delays, and dynamic re-routing to save your time.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <h3>Eco-Friendly Options</h3>
+                <p class="problem-tag">Solves: Environmental Impact</p>
+                <p>Carbon footprint tracking and green transport recommendations to reduce environmental impact.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats">
+    <div class="container">
+        <h2>Making a Real Impact</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <i class="fas fa-chart-line"></i>
+                <div class="stat-number">35%</div>
+                <div class="stat-label">Reduction in Travel Time</div>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-users"></i>
+                <div class="stat-number">2M+</div>
+                <div class="stat-label">Active Users</div>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-leaf"></i>
+                <div class="stat-number">40%</div>
+                <div class="stat-label">Carbon Footprint Reduction</div>
+            </div>
+            <div class="stat-item">
+                <i class="fas fa-clock"></i>
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Service Availability</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>NammaRoute</h3>
+                <p>Making urban transportation safer, smarter, and more sustainable.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="/route-planner">Route Planner</a></li>
+                    <li><a href="/safety">Safety Features</a></li>
+                    <li><a href="/about">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Transport Modes</h4>
+                <ul>
+                    <li>🚇 Metro Integration</li>
+                    <li>🚌 Bus Networks</li>
+                    <li>🚂 Train Services</li>
+                    <li>🚗 Auto & Ride-sharing</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 NammaRoute. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>

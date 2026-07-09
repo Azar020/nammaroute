@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>Route Direction – NammaRoute</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar">
+    <div class="nav-container">
+        <div class="nav-logo">
+            <h2>Namma<span class="highlight">Route</span></h2>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="/" class="nav-link">Home</a></li>
+            <li><a href="/route-planner" class="nav-link active">Route Planner</a></li>
+            <li><a href="/safety" class="nav-link">Safety</a></li>
+            <li><a href="/about" class="nav-link">About</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="route-planner-page">
+    <div class="container">
+        <div class="page-header">
+            <h1>Route Direction – NammaRoute</h1>
+            <p>Explore the safest and most efficient route between your locations.</p>
+        </div>
+
+        <div class="planner-card">
+            <div class="card-header">
+                <h2><i class="fas fa-route"></i> Route Map</h2>
+            </div>
+            <div class="card-content">
+                <div id="map" style="height: 400px; margin-bottom: 2rem;"></div>
+                <div id="routeDetails" class="safety-section">Loading route information...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function geocodeLocation(placeName) {
+      const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(placeName)}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data.length > 0) {
+        return {
+          lat: parseFloat(data[0].lat),
+          lon: parseFloat(data[0].lon)
+        };
+      } else {
+        throw new Error("Geocoding failed for: " + placeName);
+      }
+    }
+
+    async function showMapForRoute(originName, destName) {
+      try {
+        const origin = await geocodeLocation(originName);
+        const dest = await geocodeLocation(destName);
+
+        const map = L.map("map").setView([origin.lat, origin.lon], 12);
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: "© OpenStreetMap contributors",
+        }).addTo(map);
+
+        const osrmUrl = `https://router.project-osrm.org/route/v1/driving/${origin.lon},${origin.lat};${dest.lon},${dest.lat}?overview=full&geometries=geojson`;
+
+        const res = await fetch(osrmUrl);
+        const data = await res.json();
+        const route = data.routes[0];
+
+        L.geoJSON(route.geometry).addTo(map);
+        L.marker([origin.lat, origin.lon]).addTo(map).bindPopup("Origin: " + originName);
+        L.marker([dest.lat, dest.lon]).addTo(map).bindPopup("Destination: " + destName);
+
+        const distanceKm = (route.distance / 1000).toFixed(2);
+        const durationMin = Math.round(route.duration / 60);
+
+        document.getElementById("routeDetails").innerHTML += `
+          <p><strong>Distance:</strong> ${distanceKm} km</p>
+          <p><strong>Time:</strong> ${durationMin} minutes</p>
+        `;
+      } catch (error) {
+        console.error("Map error:", error);
+        document.getElementById("routeDetails").innerHTML += `<p>Error loading map data.</p>`;
+      }
+    }
+
+    async function loadRouteDetails() {
+      const routeId = new URLSearchParams(window.location.search).get("id");
+      if (!routeId) return;
+
+      const response = await fetch(`/api/routes/${routeId}`);
+      if (!response.ok) {
+        document.getElementById("routeDetails").innerHTML = "<p>Route not found.</p>";
+        return;
+      }
+
+      const route = await response.json();
+      const steps = route.steps.split("|").map(step => `<li>${step}</li>`).join("");
+      document.getElementById("routeDetails").innerHTML = `
+        <h2>${route.origin} → ${route.destination}</h2>
+        <p><strong>Transport Type:</strong> ${route.transportType}</p>
+        <p><strong>Duration:</strong> ${route.durationMinutes} min</p>
+        <p><strong>Total Cost:</strong> ₹${route.cost}</p>
+        <p><strong>Safety Rating:</strong> ${route.safetyRating}</p>
+        <p><strong>Environmental Rating:</strong> ${route.environmentalRating}</p>
+        <h3>Route Steps</h3>
+        <ul>${steps}</ul>
+        <h3>Estimated Fares:</h3>
+        <ul>
+          <li>🚇 Metro: ₹${estimateMetro(route)}</li>
+          <li>🚌 Bus: ₹${estimateBus(route)}</li>
+          <li>🚂 Train: ₹${estimateTrain(route)}</li>
+          <li>🏍️ Bike Booking: ₹${estimateBike(route)}</li>
+        </ul>
+        <h3>Nearby Essentials</h3>
+        <ul>
+          <li>🚔 Police Station: ${getNearbyPoliceStation(route.destination)}</li>
+          <li>🏥 Hospital: ${getNearbyHospital(route.destination)}</li>
+          <li>🍴 Food & Famous Area: ${getFamousPlace(route.destination)}</li>
+        </ul>
+      `;
+
+      showMapForRoute(route.origin, route.destination);
+    }
+
+    function estimateMetro(route) {
+      return route.transportType.toLowerCase().includes("metro") ? 20 : 0;
+    }
+
+    function estimateBus(route) {
+      return route.transportType.toLowerCase().includes("bus") ? 15 : 0;
+    }
+
+    function estimateTrain(route) {
+      return route.transportType.toLowerCase().includes("train") ? 25 : 0;
+    }
+
+    function estimateBike(route) {
+      return 45;
+    }
+
+    function getNearbyPoliceStation(dest) {
+      return "Nearest Police Station to " + dest;
+    }
+
+    function getNearbyHospital(dest) {
+      return "Nearest Hospital to " + dest;
+    }
+
+    function getFamousPlace(dest) {
+      return "Famous Places near " + dest;
+    }
+
+    loadRouteDetails();
+</script>
+</body>
+</html>
