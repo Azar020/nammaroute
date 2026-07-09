@@ -102,10 +102,3 @@ src/main/resources/
 - [ ] Dockerize for easier deployment
 - [ ] CI pipeline for automated builds/tests
 
-## Contact
-
-Feedback and suggestions welcome — feel free to open an issue.
-
-## License
-
-This project is licensed under the MIT License.
